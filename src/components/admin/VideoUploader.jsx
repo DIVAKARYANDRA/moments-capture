@@ -46,10 +46,10 @@ export default function VideoUploader({ label, value, onChange, folder }) {
             <video
               src={value}
               className="w-full h-full object-cover"
-              muted
-              loop
+              controls
               playsInline
-            />
+              preload="metadata"
+          />
 
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <Play className="text-white/80" size={40} />
