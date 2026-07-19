@@ -7,6 +7,7 @@ import { LoadingState } from "../../components/site/States";
 import { settingsService } from "../../services/settingsService";
 import { CLOUDINARY_FOLDERS } from "../../firebase/cloudinary";
 import { useSettings } from "../../context/SettingsContext";
+import VideoUploader from "../../components/admin/VideoUploader";
 
 export default function HeroManagement() {
   const { refresh } = useSettings();
