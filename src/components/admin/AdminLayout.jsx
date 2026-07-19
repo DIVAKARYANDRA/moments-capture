@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { authService } from "../../services/authService";
+import { useState } from "react";
 
 const links = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -22,6 +23,7 @@ const links = [
 
 export default function AdminLayout() {
   const { user } = useAuth();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-ink flex text-ivory">
@@ -56,6 +58,70 @@ export default function AdminLayout() {
           </button>
         </div>
       </aside>
+
+      <header className="md:hidden flex items-center justify-between p-4 border-b border-line bg-ink2">
+
+  <span className="font-display text-lg">
+    Moments Capture
+  </span>
+
+  <button
+    onClick={() => setMobileOpen(true)}
+    className="text-ivory"
+  >
+    ☰
+  </button>
+
+</header>
+
+      {mobileOpen && (
+  <div
+    className="fixed inset-0 bg-black/60 z-40 md:hidden"
+    onClick={() => setMobileOpen(false)}
+  />
+)}
+
+<div
+className={`
+fixed top-0 left-0 h-full w-64 bg-ink2 z-50
+transform transition-transform duration-300 md:hidden
+${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+`}
+>
+
+<div className="p-5 flex justify-between">
+
+<span className="font-display">
+Moments Capture
+</span>
+
+<button
+onClick={()=>setMobileOpen(false)}
+>
+✕
+</button>
+
+</div>
+
+
+<nav>
+
+{links.map((l)=>(
+<NavLink
+key={l.to}
+to={l.to}
+end={l.end}
+onClick={()=>setMobileOpen(false)}
+className="block px-6 py-3"
+>
+<l.icon size={16}/>
+{l.label}
+</NavLink>
+))}
+
+</nav>
+
+</div>
 
       <main className="flex-1 min-w-0">
         <div className="p-6 md:p-10 max-w-6xl mx-auto">
