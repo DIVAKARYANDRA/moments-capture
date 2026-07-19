@@ -49,7 +49,12 @@ export default function HeroManagement() {
         <TextArea label="Hero Subtitle" value={hero.subtitle} onChange={(v) => setField("subtitle", v)} rows={2} />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <TextInput label="Primary Button Text" value={hero.ctaPrimaryText} onChange={(v) => setField("ctaPrimaryText", v)} />
-          <TextInput label="Secondary Button Text" value={hero.ctaSecondaryText} onChange={(v) => setField("ctaSecondaryText", v)} />
+          <VideoUploader
+              label="Desktop Background Video"
+              value={hero.backgroundVideo}
+              onChange={(v)=>setField("backgroundVideo",v)}
+              folder={CLOUDINARY_FOLDERS.hero}
+          />
         </div>
         <button type="submit" disabled={saving} className="bg-gold text-ink px-8 py-3 text-xs tracking-widest2 uppercase hover:bg-gold2 disabled:opacity-50">
           {saving ? "Saving..." : "Save Hero Section"}
