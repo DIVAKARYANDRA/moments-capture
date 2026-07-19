@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import SiteLayout from "./components/site/SiteLayout";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
