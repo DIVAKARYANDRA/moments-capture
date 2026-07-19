@@ -44,19 +44,54 @@ export default function HeroManagement() {
     <div>
       <PageHeader title="Hero Section" subtitle="The first thing visitors see on your homepage." />
       <form onSubmit={onSave} className="space-y-8 max-w-2xl">
-        <ImageUploader label="Background Image" value={hero.backgroundImage} onChange={(v) => setField("backgroundImage", v)} folder={CLOUDINARY_FOLDERS.hero} />
-        <TextInput label="Background Video URL (optional, overrides image)" value={hero.backgroundVideo} onChange={(v) => setField("backgroundVideo", v)} />
-        <TextArea label="Hero Title" value={hero.title} onChange={(v) => setField("title", v)} rows={2} />
-        <TextArea label="Hero Subtitle" value={hero.subtitle} onChange={(v) => setField("subtitle", v)} rows={2} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <TextInput label="Primary Button Text" value={hero.ctaPrimaryText} onChange={(v) => setField("ctaPrimaryText", v)} />
-          <VideoUploader
-              label="Desktop Background Video"
-              value={hero.backgroundVideo}
-              onChange={(v)=>setField("backgroundVideo",v)}
-              folder={CLOUDINARY_FOLDERS.hero}
-          />
-        </div>
+        <ImageUploader
+  label="Mobile Hero Image"
+  value={hero.backgroundImage}
+  onChange={(v) => setField("backgroundImage", v)}
+  folder={CLOUDINARY_FOLDERS.hero}
+/>
+
+
+<VideoUploader
+  label="Desktop Hero Video"
+  value={hero.backgroundVideo}
+  onChange={(v) => setField("backgroundVideo", v)}
+  folder={CLOUDINARY_FOLDERS.hero}
+/>
+
+
+<TextArea
+  label="Hero Title"
+  value={hero.title}
+  onChange={(v) => setField("title", v)}
+  rows={2}
+/>
+
+
+<TextArea
+  label="Hero Subtitle"
+  value={hero.subtitle}
+  onChange={(v) => setField("subtitle", v)}
+  rows={2}
+/>
+
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+  <TextInput
+    label="Primary Button Text"
+    value={hero.ctaPrimaryText}
+    onChange={(v) => setField("ctaPrimaryText", v)}
+  />
+
+
+  <TextInput
+    label="Secondary Button Text"
+    value={hero.ctaSecondaryText}
+    onChange={(v) => setField("ctaSecondaryText", v)}
+  />
+
+</div>
         <button type="submit" disabled={saving} className="bg-gold text-ink px-8 py-3 text-xs tracking-widest2 uppercase hover:bg-gold2 disabled:opacity-50">
           {saving ? "Saving..." : "Save Hero Section"}
         </button>
