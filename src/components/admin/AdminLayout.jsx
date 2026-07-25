@@ -21,7 +21,7 @@ import { useAuth } from "../../context/AuthContext";
 import { authService } from "../../services/authService";
 
 
-const links = [
+const ALL_LINKS = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/admin/settings", label: "Site Settings", icon: Settings },
   { to: "/admin/hero", label: "Hero Section", icon: Image },
@@ -34,12 +34,40 @@ const links = [
   { to: "/admin/enquiries", label: "Enquiries", icon: Inbox },
 ];
 
+const ROLE_PERMISSIONS = {
+  developer: [
+    "/admin",
+    "/admin/settings",
+    "/admin/hero",
+    "/admin/portfolio",
+    "/admin/services",
+    "/admin/founders",
+    "/admin/gallery",
+    "/admin/videos",
+    "/admin/testimonials",
+    "/admin/enquiries",
+  ],
+
+  admin: [
+    "/admin",
+    "/admin/hero",
+    "/admin/portfolio",
+    "/admin/gallery",
+    "/admin/videos",
+    "/admin/testimonials",
+    "/admin/enquiries",
+  ],
+};
 
 export default function AdminLayout() {
 
-  const { user } = useAuth();
+  const { user, role } = useAuth();
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const links =
+  ALL_LINKS.filter(link =>
+    ROLE_PERMISSIONS[role]?.includes(link.to)
+  );
 
 
   const closeMobileMenu = () => {
