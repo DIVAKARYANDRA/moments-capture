@@ -50,7 +50,6 @@ const ROLE_PERMISSIONS = {
 
   admin: [
     "/admin",
-    "/admin/hero",
     "/admin/portfolio",
     "/admin/gallery",
     "/admin/videos",
