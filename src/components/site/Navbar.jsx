@@ -39,7 +39,8 @@ export default function Navbar() {
           <img
             src={logo}
             alt="Moments Capture"
-            className="h-10 w-auto object-contain"
+            className="h-12 w-12 rounded-full object-cover border-2 border-gold shadow-lg"
+
           />
         
           <span className="font-display text-2xl tracking-wide text-ivory">
