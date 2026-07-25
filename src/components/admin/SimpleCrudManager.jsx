@@ -5,6 +5,7 @@ import PageHeader from "./PageHeader";
 import Modal from "./Modal";
 import DataTable from "./DataTable";
 import ImageUploader from "./ImageUploader";
+import VideoUploader from "./VideoUploader";
 import {
   TextInput, TextArea, SelectInput, CheckboxInput, ListInput,
 } from "./FormField";
@@ -112,6 +113,16 @@ export default function SimpleCrudManager({ title, subtitle, service, fields, co
               switch (f.type) {
                 case "image":
                   return <ImageUploader key={f.name} label={f.label} value={val} onChange={(v) => setField(f.name, v)} folder={f.folder} />;
+                case "video":
+                  return (
+                    <VideoUploader
+                      key={f.name}
+                      label={f.label}
+                      value={val}
+                      onChange={(v) => setField(f.name, v)}
+                      folder={f.folder}
+                    />
+                  );
                 case "textarea":
                   return <TextArea key={f.name} label={f.label} value={val} onChange={(v) => setField(f.name, v)} />;
                 case "select":
