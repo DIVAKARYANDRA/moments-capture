@@ -6,6 +6,10 @@ import SectionHeading from "../../components/site/SectionHeading";
 import Reveal from "../../components/site/Reveal";
 import { useSettings } from "../../context/SettingsContext";
 import { enquiryService } from "../../services/enquiryService";
+import {
+  buildEnquiryMessage,
+  buildWhatsAppLink,
+} from "../../services/whatsapp";
 
 const EVENT_TYPES = ["Wedding", "Pre-Wedding", "Event", "Birthday", "Corporate", "Portrait", "Maternity", "Other"];
 
@@ -26,10 +30,33 @@ export default function Contact() {
     }
     setSubmitting(true);
     try {
-      await enquiryService.add({ ...form, status: "New" });
-      toast.success("Thank you! We'll be in touch shortly.");
-      setForm(emptyForm);
-    } catch (err) {
+
+  // Save enquiry for admin dashboard
+  await enquiryService.add({
+    ...form,
+    status: "New",
+  });
+
+  // Build WhatsApp message
+  const message = buildEnquiryMessage({
+    businessName: settings.businessName,
+    form,
+  });
+
+  // Open WhatsApp
+  const link = buildWhatsAppLink(
+    settings.whatsapp,
+    message
+  );
+
+  window.open(link, "_blank", "noopener,noreferrer");
+
+  toast.success("Opening WhatsApp...");
+
+  setForm(emptyForm);
+
+}
+    catch (err) {
       console.error(err);
       toast.error("Something went wrong. Please try again or call us directly.");
     } finally {
