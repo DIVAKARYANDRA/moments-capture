@@ -22,10 +22,12 @@ export function AuthProvider({ children }) {
     return unsub;
   }, []);
 
-  const isAdmin = !!user && role === "admin";
+  const canAccessAdmin =
+  !!user &&
+  (role === "developer" || role === "admin");
 
   return (
-    <AuthContext.Provider value={{ user, role, isAdmin, loading }}>
+    <AuthContext.Provider value={{ user, role, canAccessAdmin, loading }}>
       {children}
     </AuthContext.Provider>
   );
