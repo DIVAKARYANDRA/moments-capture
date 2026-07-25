@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useSettings } from "../../context/SettingsContext";
+import logo from "../../assets/logo.png";
 
 const links = [
   { to: "/", label: "Home" },
@@ -30,8 +31,21 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-content mx-auto flex items-center justify-between px-6 md:px-10 py-5">
-        <Link to="/" className="font-display text-2xl tracking-wide text-ivory">
-          {settings.businessName || "Moments Capture"}
+        <Link
+          to="/"
+          className="flex items-center gap-3"
+        >
+        
+          <img
+            src={logo}
+            alt="Moments Capture"
+            className="h-10 w-auto object-contain"
+          />
+        
+          <span className="font-display text-2xl tracking-wide text-ivory">
+            {settings.businessName || "Moments Capture"}
+          </span>
+        
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">
