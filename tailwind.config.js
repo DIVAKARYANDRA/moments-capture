@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-  ink: "#FAF8F5",
-  ink2: "#FFFFFF",
+  ink: "#F7F3EE",
+  ink2: "#EFE7DD",
 
-  ivory: "#1E1E1E",
-  ivory2: "#444444",
+  ivory: "#2E2522",
+  ivory2: "#5A4E49",
 
-  gold: "#C9A34E",
-  gold2: "#DDBA68",
+  gold: "#C49A3A",
+  gold2: "#DDBE76",
 
-  line: "#E5E5E5",
+  line: "#D7C8B6",
 },
       fontFamily: {
         display: ["'Cormorant Garamond'", "serif"],
