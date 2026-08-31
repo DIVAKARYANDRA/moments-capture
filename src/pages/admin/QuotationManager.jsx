@@ -119,7 +119,7 @@ export default function QuotationManager() {
                 value={clientInfo.clientName}
                 onChange={(e) => setClientInfo({ ...clientInfo, clientName: e.target.value })}
                 className="w-full bg-ink border border-line px-3 py-2 text-sm text-ivory rounded focus:border-gold outline-none"
-                placeholder="e.g. Ramesh & Priya"
+                placeholder="e.g. Surya or Pavan"
               />
             </div>
             <div>
@@ -242,9 +242,9 @@ export default function QuotationManager() {
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4 border-b-2 border-gray-900 pb-6">
             <div className="w-full sm:w-auto">
               <img
-                src={settings?.logo || defaultLogo}
+                src={defaultLogo}
                 alt={settings?.businessName || "Studio Logo"}
-                className="h-16 sm:h-20 w-auto max-w-[180px] sm:max-w-[200px] object-contain mb-3"
+                className="h-24 sm:h-32 w-auto max-w-[260px] sm:max-w-[320px] object-contain mb-3"
               />
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 uppercase break-words">
                 {settings?.businessName || "Moments Capture"}
@@ -255,8 +255,8 @@ export default function QuotationManager() {
 
               <div className="text-xs text-gray-600 mt-2 space-y-0.5 break-words">
                 <p>
-                  Email: {settings?.email || "contact@momentscapture.com"} | Phone:{" "}
-                  {settings?.phone || "+91 98765 43210"}
+                  Email: {settings?.email || "momentcapture624@gmail.com"} | Phone:{" "}
+                  {settings?.phone || "+91 9381260107"}
                 </p>
                 {settings?.address && (
                   <p>Address: {settings.address}</p>
