@@ -231,29 +231,29 @@ export default function QuotationManager() {
       </div>
 
       {/* Document Preview */}
-      <div className="pt-4">
+      <div className="pt-4 overflow-x-auto">
         <h3 className="text-xs tracking-widest uppercase text-gold mb-4">Document Preview</h3>
 
         <div
           id="quotation-document"
-          className="bg-white text-gray-900 p-8 md:p-12 rounded shadow-2xl max-w-4xl mx-auto"
+          className="bg-white text-gray-900 p-6 sm:p-8 md:p-12 rounded shadow-2xl max-w-4xl mx-auto w-full box-border"
         >
           {/* Header with Site Settings Info */}
-          <div className="flex justify-between items-start border-b-2 border-gray-900 pb-6">
-            <div>
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-4 border-b-2 border-gray-900 pb-6">
+            <div className="w-full sm:w-auto">
               <img
-                src={defaultLogo}
+                src={settings?.logo || defaultLogo}
                 alt={settings?.businessName || "Studio Logo"}
-                className="h-20 w-auto max-w-[200px] object-contain mb-3"
+                className="h-16 sm:h-20 w-auto max-w-[180px] sm:max-w-[200px] object-contain mb-3"
               />
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900 uppercase">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 uppercase break-words">
                 {settings?.businessName || "Moments Capture"}
               </h1>
               <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase mt-1">
                 Photography & Videography Studio
               </p>
-              
-              <div className="text-xs text-gray-600 mt-2 space-y-0.5">
+
+              <div className="text-xs text-gray-600 mt-2 space-y-0.5 break-words">
                 <p>
                   Email: {settings?.email || "contact@momentscapture.com"} | Phone:{" "}
                   {settings?.phone || "+91 98765 43210"}
@@ -268,20 +268,22 @@ export default function QuotationManager() {
                       href={settings.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 underline font-medium"
+                      className="text-blue-600 underline font-semibold"
                     >
-                      {settings.instagram}
+                      @moment_capture_vizag
                     </a>
                   </p>
                 )}
               </div>
             </div>
 
-            <div className="text-right">
-              <span className="inline-block bg-gray-900 text-white text-xs font-bold uppercase px-3 py-1 rounded tracking-wider">
+            <div className="text-left sm:text-right w-full sm:w-auto flex flex-row sm:flex-col justify-between sm:justify-start items-center sm:items-end pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-200 sm:border-none">
+              <span className="inline-block bg-gray-900 text-white text-xs font-bold uppercase px-3 py-1 rounded tracking-wider whitespace-nowrap">
                 Quotation Estimate
               </span>
-              <p className="text-xs text-gray-500 mt-2">Date: {clientInfo.quoteDate}</p>
+              <p className="text-xs text-gray-500 mt-0 sm:mt-2 whitespace-nowrap">
+                Date: {clientInfo.quoteDate}
+              </p>
             </div>
           </div>
 
@@ -294,35 +296,37 @@ export default function QuotationManager() {
           </div>
 
           {/* Package Breakdown */}
-          <table className="w-full text-left text-xs mb-6 border-collapse">
-            <thead>
-              <tr className="border-b-2 border-gray-900 text-gray-900 uppercase tracking-wider">
-                <th className="py-2 px-1 font-bold">Event & Coverage Breakdown</th>
-                <th className="py-2 px-1 font-bold text-center w-28">Date</th>
-                <th className="py-2 px-1 font-bold text-right w-28">Amount (₹)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events.map((item) => (
-                <tr key={item.id} className="border-b border-gray-200">
-                  <td className="py-3 px-1">
-                    <p className="font-bold text-gray-900 text-sm">{item.eventName || "Event Package"}</p>
-                    <p className="text-gray-600 whitespace-pre-line mt-1 text-[11px] leading-relaxed">
-                      {item.deliverables}
-                    </p>
-                  </td>
-                  <td className="py-3 px-1 text-center text-gray-600">{item.date || "-"}</td>
-                  <td className="py-3 px-1 text-right font-semibold text-gray-900">
-                    ₹{Number(item.price || 0).toLocaleString("en-IN")}
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs mb-6 border-collapse min-w-[300px]">
+              <thead>
+                <tr className="border-b-2 border-gray-900 text-gray-900 uppercase tracking-wider">
+                  <th className="py-2 px-1 font-bold">Event & Coverage Breakdown</th>
+                  <th className="py-2 px-1 font-bold text-center w-20 sm:w-28">Date</th>
+                  <th className="py-2 px-1 font-bold text-right w-24 sm:w-28">Amount (₹)</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {events.map((item) => (
+                  <tr key={item.id} className="border-b border-gray-200">
+                    <td className="py-3 px-1">
+                      <p className="font-bold text-gray-900 text-sm">{item.eventName || "Event Package"}</p>
+                      <p className="text-gray-600 whitespace-pre-line mt-1 text-[11px] leading-relaxed">
+                        {item.deliverables}
+                      </p>
+                    </td>
+                    <td className="py-3 px-1 text-center text-gray-600">{item.date || "-"}</td>
+                    <td className="py-3 px-1 text-right font-semibold text-gray-900">
+                      ₹{Number(item.price || 0).toLocaleString("en-IN")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           {/* Pricing Totals */}
           <div className="flex justify-end border-t border-gray-300 pt-4 mb-8">
-            <div className="w-64 space-y-2 text-xs">
+            <div className="w-full sm:w-64 space-y-2 text-xs">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal:</span>
                 <span>₹{subtotal.toLocaleString("en-IN")}</span>
