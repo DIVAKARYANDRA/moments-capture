@@ -241,23 +241,40 @@ export default function QuotationManager() {
           {/* Header with Site Settings Info */}
           <div className="flex justify-between items-start border-b-2 border-gray-900 pb-6">
             <div>
-              {settings?.logo && (
-                <img
-                  src={defaultLogo}
-                  alt={settings.businessName || "Studio Logo"}
-                  className="h-12 object-contain mb-3"
-                />
-              )}
+              <img
+                src={defaultLogo}
+                alt={settings?.businessName || "Studio Logo"}
+                className="h-20 w-auto max-w-[200px] object-contain mb-3"
+              />
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 uppercase">
                 {settings?.businessName || "Moments Capture"}
               </h1>
               <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase mt-1">
                 Photography & Videography Studio
               </p>
-              <p className="text-xs text-gray-600 mt-2">
-                Email: {settings?.email || "contact@momentscapture.com"} | Phone:{" "}
-                {settings?.phone || "+91 98765 43210"}
-              </p>
+              
+              <div className="text-xs text-gray-600 mt-2 space-y-0.5">
+                <p>
+                  Email: {settings?.email || "contact@momentscapture.com"} | Phone:{" "}
+                  {settings?.phone || "+91 98765 43210"}
+                </p>
+                {settings?.address && (
+                  <p>Address: {settings.address}</p>
+                )}
+                {settings?.instagram && (
+                  <p>
+                    Instagram:{" "}
+                    <a
+                      href={settings.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline font-medium"
+                    >
+                      {settings.instagram}
+                    </a>
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className="text-right">
