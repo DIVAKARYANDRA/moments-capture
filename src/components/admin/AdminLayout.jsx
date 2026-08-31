@@ -14,6 +14,7 @@ import {
   Camera,
   Menu,
   X,
+  FileText,
 } from "lucide-react";
 
 import { useState } from "react";
@@ -31,6 +32,7 @@ const ALL_LINKS = [
   { to: "/admin/gallery", label: "Gallery", icon: GalleryHorizontalEnd },
   { to: "/admin/videos", label: "Videos", icon: Video },
   { to: "/admin/testimonials", label: "Testimonials", icon: MessageSquareQuote },
+  { to: "/admin/quotations", label: "Quotations", icon: FileText },
   { to: "/admin/enquiries", label: "Enquiries", icon: Inbox },
 ];
 
@@ -46,6 +48,7 @@ const ROLE_PERMISSIONS = {
     "/admin/videos",
     "/admin/testimonials",
     "/admin/enquiries",
+    "/admin/quotations",
   ],
 
   admin: [
@@ -55,6 +58,7 @@ const ROLE_PERMISSIONS = {
     "/admin/videos",
     "/admin/testimonials",
     "/admin/enquiries",
+    "/admin/quotations",
   ],
 };
 

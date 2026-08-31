@@ -24,6 +24,7 @@ const GalleryManager = lazy(() => import("./pages/admin/GalleryManager"));
 const VideosManager = lazy(() => import("./pages/admin/VideosManager"));
 const TestimonialsManager = lazy(() => import("./pages/admin/TestimonialsManager"));
 const EnquiryManager = lazy(() => import("./pages/admin/EnquiryManager"));
+const QuotationManager = lazy(() => import("./pages/admin/QuotationManager"));
 
 export default function App() {
   return (
@@ -62,7 +63,9 @@ export default function App() {
         <Route path="gallery" element={<GalleryManager />} />
         <Route path="videos" element={<VideosManager />} />
         <Route path="testimonials" element={<TestimonialsManager />} />
+        <Route path="quotations" element={<QuotationManager />} />
         <Route path="enquiries" element={<EnquiryManager />} />
+        
       </Route>
     </Routes>
   );
