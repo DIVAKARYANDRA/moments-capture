@@ -3,6 +3,7 @@ import { Plus, Trash2, Download } from "lucide-react";
 import toast from "react-hot-toast";
 import html2pdf from "html2pdf.js";
 import { useSettings } from "../../context/SettingsContext";
+import defaultLogo from "../../assets/logo.png";
 
 export default function QuotationManager() {
   const { settings } = useSettings();
@@ -242,7 +243,7 @@ export default function QuotationManager() {
             <div>
               {settings?.logo && (
                 <img
-                  src={settings.logo}
+                  src={defaultLogo}
                   alt={settings.businessName || "Studio Logo"}
                   className="h-12 object-contain mb-3"
                 />
