@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Plus, Trash2, Printer } from "lucide-react";
+import { Plus, Trash2, Download } from "lucide-react";
 import toast from "react-hot-toast";
+import html2pdf from "html2pdf.js";
+import { useSettings } from "../../context/SettingsContext";
 
 export default function QuotationManager() {
+  const { settings } = useSettings();
+  const [isGenerating, setIsGenerating] = useState(false);
+
   const [clientInfo, setClientInfo] = useState({
     clientName: "",
     phone: "",
@@ -15,7 +20,8 @@ export default function QuotationManager() {
       id: 1,
       eventName: "Marriage & Reception",
       date: "",
-      deliverables: "Traditional Photography + Candid Photography, Drone Coverage, 1 Highlight Film, All Raw Files in HDD",
+      deliverables:
+        "Traditional Photography + Candid Photography, Drone Coverage, 1 Highlight Film, All Raw Files in HDD",
       price: 0,
     },
   ]);
@@ -55,30 +61,53 @@ export default function QuotationManager() {
   const subtotal = events.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
   const grandTotal = Math.max(0, subtotal - (Number(discount) || 0));
 
-  const handlePrint = () => {
-    window.print();
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById("quotation-document");
+    if (!element) return;
+
+    setIsGenerating(true);
+    const fileName = `${clientInfo.clientName || "Client"}_Quotation.pdf`;
+
+    const opt = {
+      margin: 10,
+      filename: fileName,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+
+    try {
+      await html2pdf().set(opt).from(element).save();
+      toast.success("PDF downloaded successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to generate PDF");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
     <div className="space-y-8">
       {/* Header Controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-line pb-6 print:hidden">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-line pb-6">
         <div>
           <h1 className="font-display text-2xl text-ivory">Quotation System</h1>
           <p className="text-xs text-ivory/60 mt-1">Generate customized photography packages for clients</p>
         </div>
 
         <button
-          onClick={handlePrint}
-          className="flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider uppercase bg-gold text-ink rounded hover:bg-gold/90 transition-colors"
+          onClick={handleDownloadPDF}
+          disabled={isGenerating}
+          className="flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider uppercase bg-gold text-ink rounded hover:bg-gold/90 transition-colors disabled:opacity-50"
         >
-          <Printer size={15} /> Print / Download PDF
+          <Download size={15} /> {isGenerating ? "Generating PDF..." : "Download PDF"}
         </button>
       </div>
 
-      {/* Admin Input Form (Hidden during browser print) */}
-      <div className="space-y-6 print:hidden">
-        {/* Client Info */}
+      {/* Admin Input Form */}
+      <div className="space-y-6">
+        {/* Client Details */}
         <div className="p-6 bg-ink2 border border-line rounded-lg space-y-4">
           <h2 className="text-xs font-semibold tracking-widest text-gold uppercase">Client Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -164,7 +193,7 @@ export default function QuotationManager() {
 
               <textarea
                 rows="2"
-                placeholder="Deliverables & Team Coverage (e.g. 2 Traditional Photographers, 1 Drone, Album details)"
+                placeholder="Deliverables & Team Coverage"
                 value={evt.deliverables}
                 onChange={(e) => updateEvent(evt.id, "deliverables", e.target.value)}
                 className="w-full bg-ink2 border border-line p-2 text-xs text-ivory rounded focus:border-gold outline-none resize-y"
@@ -200,17 +229,34 @@ export default function QuotationManager() {
         </div>
       </div>
 
-      {/* Quotation Document Preview / Printable Printable Target */}
+      {/* Document Preview */}
       <div className="pt-4">
-        <h3 className="text-xs tracking-widest uppercase text-gold mb-4 print:hidden">Document Preview</h3>
+        <h3 className="text-xs tracking-widest uppercase text-gold mb-4">Document Preview</h3>
 
-        <div className="bg-white text-gray-900 p-8 md:p-12 rounded shadow-2xl max-w-4xl mx-auto print:p-0 print:shadow-none print:w-full print:max-w-none print:text-black">
-          {/* Print Document Header */}
+        <div
+          id="quotation-document"
+          className="bg-white text-gray-900 p-8 md:p-12 rounded shadow-2xl max-w-4xl mx-auto"
+        >
+          {/* Header with Site Settings Info */}
           <div className="flex justify-between items-start border-b-2 border-gray-900 pb-6">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900 uppercase">Moments Capture</h1>
-              <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase mt-1">Photography & Videography Studio</p>
-              <p className="text-xs text-gray-600 mt-2">Email: contact@momentscapture.com | Phone: +91 98765 43210</p>
+              {settings?.logo && (
+                <img
+                  src={settings.logo}
+                  alt={settings.businessName || "Studio Logo"}
+                  className="h-12 object-contain mb-3"
+                />
+              )}
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 uppercase">
+                {settings?.businessName || "Moments Capture"}
+              </h1>
+              <p className="text-xs font-semibold tracking-widest text-gray-500 uppercase mt-1">
+                Photography & Videography Studio
+              </p>
+              <p className="text-xs text-gray-600 mt-2">
+                Email: {settings?.email || "contact@momentscapture.com"} | Phone:{" "}
+                {settings?.phone || "+91 98765 43210"}
+              </p>
             </div>
 
             <div className="text-right">
@@ -221,7 +267,7 @@ export default function QuotationManager() {
             </div>
           </div>
 
-          {/* Client Information */}
+          {/* Client Details */}
           <div className="my-6 bg-gray-100 p-4 rounded text-xs space-y-1">
             <p className="text-xs uppercase font-bold tracking-wider text-gray-500">Prepared For:</p>
             <p className="font-bold text-gray-900 text-base">{clientInfo.clientName || "Client Name"}</p>
@@ -229,7 +275,7 @@ export default function QuotationManager() {
             {clientInfo.email && <p className="text-gray-700">Email: {clientInfo.email}</p>}
           </div>
 
-          {/* Events Table */}
+          {/* Package Breakdown */}
           <table className="w-full text-left text-xs mb-6 border-collapse">
             <thead>
               <tr className="border-b-2 border-gray-900 text-gray-900 uppercase tracking-wider">
@@ -243,7 +289,9 @@ export default function QuotationManager() {
                 <tr key={item.id} className="border-b border-gray-200">
                   <td className="py-3 px-1">
                     <p className="font-bold text-gray-900 text-sm">{item.eventName || "Event Package"}</p>
-                    <p className="text-gray-600 whitespace-pre-line mt-1 text-[11px] leading-relaxed">{item.deliverables}</p>
+                    <p className="text-gray-600 whitespace-pre-line mt-1 text-[11px] leading-relaxed">
+                      {item.deliverables}
+                    </p>
                   </td>
                   <td className="py-3 px-1 text-center text-gray-600">{item.date || "-"}</td>
                   <td className="py-3 px-1 text-right font-semibold text-gray-900">
@@ -254,7 +302,7 @@ export default function QuotationManager() {
             </tbody>
           </table>
 
-          {/* Total Calculation */}
+          {/* Pricing Totals */}
           <div className="flex justify-end border-t border-gray-300 pt-4 mb-8">
             <div className="w-64 space-y-2 text-xs">
               <div className="flex justify-between text-gray-600">
@@ -282,9 +330,9 @@ export default function QuotationManager() {
             </div>
           )}
 
-          {/* Printable Footer */}
+          {/* Footer */}
           <div className="mt-10 pt-4 border-t border-gray-200 text-center text-[10px] text-gray-500">
-            Thank you for choosing Moments Capture to preserve your special memories!
+            Thank you for choosing {settings?.businessName || "Moments Capture"} to preserve your special memories!
           </div>
         </div>
       </div>
